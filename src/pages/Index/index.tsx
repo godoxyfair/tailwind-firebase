@@ -7,21 +7,19 @@ import logo from '../../logo.svg'
 import Counter from './Counter'
 import DocList from './DocList'
 import styles from './index.module.css'
+import MainForm from '@/components/MainForm/MainForm'
 
 interface Props {}
 
 const Index: React.FC<Props> = memo(() => {
   return (
     <>
-      <Box>
+      {/* <Box>
         <img src={logo} alt="react-logo" className="react-logo" />
-      </Box>
-      <Box>
-        <Counter />
-      </Box>
+      </Box> */}
       <Box>
         <Suspense fallback={<Spinner size="xl" />}>
-          <DocList />
+          <MainForm />
         </Suspense>
       </Box>
     </>
