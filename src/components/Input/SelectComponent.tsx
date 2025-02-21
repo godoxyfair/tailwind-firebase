@@ -23,7 +23,7 @@ const SelectComponent = forwardRef<HTMLSelectElement, Props>(
             {props.optionsData}
           </select>
           <p
-            className={`font-[12px] h-[16px] ${props.error ? 'text-red-500' : 'text-gray-500'}`}
+            className={`flex items-center font-[12px] h-[16px] ${props.error ? 'text-red-500' : 'text-gray-500'}`}
           >
             {props.error ? props.error.message : ''}
           </p>{' '}

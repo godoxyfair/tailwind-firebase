@@ -19,7 +19,7 @@ const InputComponent = forwardRef<HTMLInputElement, Props>(
             {...props}
           />
           <p
-            className={`font-[12px] h-[16px] ${props.error ? 'text-red-500' : 'text-gray-500'}`}
+            className={`flex font-[12px] h-[16px] items-center ${props.error ? 'text-red-500' : 'text-gray-500'}`}
           >
             {props.error ? props.error.message : ''}
           </p>{' '}

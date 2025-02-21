@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react'
 import InputComponent from '../Input/InputComponent'
 import { useForm } from 'react-hook-form'
 import SelectComponent from '../Input/SelectComponent'
-import { queries } from '@testing-library/dom'
+import { AuthRequestDtoValidationSchema } from './authValidation'
 
 type Props = {}
 
 type FormInputs = {
-  firstName: 'string'
-  lastName: 'string'
-  email: 'string'
-  password: 'string'
-  country: 'string'
-  city: 'string'
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  country: string
+  city: string
 }
 
 type Country = {
@@ -30,7 +30,10 @@ const MainForm: React.FC<Props> = () => {
     getValues,
     clearErrors,
     watch,
-  } = useForm<FormInputs>({ reValidateMode: 'onSubmit' })
+  } = useForm<FormInputs, FormInputs>({
+    reValidateMode: 'onSubmit',
+    resolver: AuthRequestDtoValidationSchema,
+  })
 
   const [optionsData, setoptionsData] = useState<Array<string>>([])
   const [cities, setCities] = useState<Array<string>>([])
@@ -93,7 +96,9 @@ const MainForm: React.FC<Props> = () => {
             placeholder="First Name"
             id="first-name"
             label="First Name"
-            {...register('firstName')}
+            {...register('firstName', {
+              onChange: () => clearErrors('lastName'),
+            })}
             error={errors.firstName}
           />
           <InputComponent
@@ -102,7 +107,9 @@ const MainForm: React.FC<Props> = () => {
             placeholder="Last Name"
             id="last-name"
             label="Last Name"
-            {...register('lastName')}
+            {...register('lastName', {
+              onChange: () => clearErrors('lastName'),
+            })}
             error={errors.lastName}
           />
           <InputComponent
@@ -111,7 +118,9 @@ const MainForm: React.FC<Props> = () => {
             placeholder="you@example.com"
             id="email"
             label="Email"
-            {...register('email')}
+            {...register('email', {
+              onChange: () => clearErrors('email'),
+            })}
             error={errors.email}
           />
           <InputComponent
@@ -120,7 +129,9 @@ const MainForm: React.FC<Props> = () => {
             placeholder="Password"
             id="password"
             label="Password"
-            {...register('password')}
+            {...register('password', {
+              onChange: () => clearErrors('password'),
+            })}
             error={errors.password}
           />
           <span className="col-span-2">
@@ -131,7 +142,9 @@ const MainForm: React.FC<Props> = () => {
               id="country"
               label="Country"
               defaultValue={''}
-              {...register('country')}
+              {...register('country', {
+                onChange: () => clearErrors('country'),
+              })}
               error={errors.country}
               optionsData={optionsData.map((item) => (
                 <option key={item} value={item}>
@@ -148,7 +161,9 @@ const MainForm: React.FC<Props> = () => {
               defaultValue={''}
               placeholder="City"
               autoComplete="city"
-              {...register('city')}
+              {...register('city', {
+                onChange: () => clearErrors('city'),
+              })}
               disabled={!watch('country') || !!errors.country}
               error={errors.city}
               optionsData={
@@ -162,14 +177,14 @@ const MainForm: React.FC<Props> = () => {
               }
             />
           </span>
+          <button
+            className="btn-primary col-span-full w-full bg-sky-400 p-2 text-[16px] text-white rounded-[8px] hover:bg-sky-600"
+            type="submit"
+            title="Login"
+          >
+            Login
+          </button>
         </div>
-        <button
-          className="btn-primary w-full bg-sky-400 p-2 text-[16px] text-white rounded-[8px] hover:bg-sky-600"
-          type="submit"
-          title="Login"
-        >
-          Login
-        </button>
       </form>
     </div>
   )
